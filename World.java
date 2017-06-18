@@ -34,9 +34,8 @@ public class World {
         
         for (Molecule mol : newMols) {
             //account for accelerations
-            double newXVel=mol.getVelocity().getX()+GRAVITY*timeElapsed;
-            double newYVel=mol.getVelocity().getY()+GRAVITY*timeElapsed;
-            mol.setVelocity(new Vector(newXVel, newYVel));
+            double newYVel=mol.getVelocity().getY()+GRAVITY*((double)timeElapsed/1000);
+            mol.setVelocity(new Vector(mol.getVelocity().getX(), newYVel));
 
             ArrayList<Molecule> neighbors=new ArrayList<Molecule>();
             //find neighbors
@@ -56,8 +55,8 @@ public class World {
                 double collideYVel=mol.getVelocity().getY()*(-0.75);
             }
             //change velocities based on vicosity
-            double newXPos=mol.getPosition().getX()+mol.getVelocity().getX()*timeElapsed;
-            double newYPos=mol.getPosition().getY()+mol.getVelocity().getY()*timeElapsed;
+            double newXPos=mol.getPosition().getX()+mol.getVelocity().getX()*((double)timeElapsed/1000);
+            double newYPos=mol.getPosition().getY()+mol.getVelocity().getY()*((double)timeElapsed/1000);
             mol.setPosition(new Vector(newXPos, newYPos));
         }
         molecules=newMols; //set list of molecules to updated molecules
@@ -103,7 +102,7 @@ public class World {
         
     public void paint(Graphics g) {
     	//first step the simulation
-    	long difference = time - System.currentTimeMillis();
+    	long difference = System.currentTimeMillis()-time;
     	time = System.currentTimeMillis();
     	step(difference);
     	
