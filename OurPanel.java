@@ -1,5 +1,7 @@
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.MouseInfo;
+import java.awt.Point;
 
 import javax.swing.JPanel;
 
@@ -11,6 +13,7 @@ public class OurPanel extends JPanel{
 	public OurPanel(GUI g, World w){
 		gui = g;
 		world = w;
+		w.setPanel(this);
 	}
 	
 	
@@ -32,5 +35,13 @@ public class OurPanel extends JPanel{
     g.drawImage(offImage, 0, 0, null); //3, 37 is the offset necessary to keep the image from being drawn
     									//under the header bar of the window
     
+	}
+	
+	public Vector getMouseCoordinates() {
+		//int x = MouseInfo.getPointerInfo().getLocation().x - this.getLocationOnScreen().x;
+		//int y = MouseInfo.getPointerInfo().getLocation().y - this.getLocationOnScreen().y;
+		int x = MouseInfo.getPointerInfo().getLocation().x;
+		int y = MouseInfo.getPointerInfo().getLocation().y;
+		return new Vector(x, y);
 	}
 }

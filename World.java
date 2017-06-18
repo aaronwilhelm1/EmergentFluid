@@ -11,6 +11,7 @@ public class World {
     private static int ID=0;
     private long time;
     private int molIDBeingHeld;
+    private OurPanel panel;
     
     public World() {
         molecules=new ArrayList<Molecule>();
@@ -56,11 +57,28 @@ public class World {
                 double collideXVel=mol.getVelocity().getX()*(-0.75);
                 double collideYVel=mol.getVelocity().getY()*(-0.75);
             }
-            //change velocities based on vicosity
+            //change velocities based on viscosity
             double newXPos=mol.getPosition().getX()+mol.getVelocity().getX()*((double)timeElapsed/1000);
             double newYPos=mol.getPosition().getY()+mol.getVelocity().getY()*((double)timeElapsed/1000);
             mol.setPosition(new Vector(newXPos, newYPos));
         }
+        
+        //if a molecule is being held, set its position and velocity to that of the mouse
+        if(molIDBeingHeld != -1) {
+        	Molecule m = null;
+        	for (Molecule searching : newMols) {
+        		if(searching.getId() == molIDBeingHeld) {
+        			m = searching;
+        			break;
+        		}
+        	}
+        	
+        	Vector mousePos = panel.getMouseCoordinates();
+        	Vector vel = new Vector(mousePos.getX() - m.getPosition().getX(), mousePos.getY() - m.getPosition().getY());
+        	m.setPosition(mousePos);
+        	m.setVelocity(vel);
+        }
+        
         molecules=newMols; //set list of molecules to updated molecules
     }
     
@@ -124,6 +142,10 @@ public class World {
         		}
         	}
     	}
+    }
+    
+    public void setPanel(OurPanel p) {
+    	panel = p;
     }
         
     public void paint(Graphics g) {
