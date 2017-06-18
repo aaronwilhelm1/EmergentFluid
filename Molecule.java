@@ -5,7 +5,7 @@ public class Molecule {
 	private double mass;
 	private double radius;
 	private double viscosity; //the amount that neighbors affect it (from 0 to 1)
-	private double range; //the radius in which molecules count as neighbors
+	private double range; //the distance between boundaries in which molecules count as neighbors
 	
 	public Molecule(Vector initPos, Vector initVel, double newMass, double newRadius, double newViscosity, double newRange) {
 		position = initPos;
@@ -13,7 +13,7 @@ public class Molecule {
 		mass = newMass;
 		radius = newRadius;
 		viscosity = newViscosity;
-		range = newRange + radius
+		range = newRange + radius;
 	}
 	
 	public Vector getPosition() {
@@ -52,8 +52,8 @@ public class Molecule {
 		Vector initVel = new Vector(velocity.getX(), velocity.getY());
 		//m1v1 = m2v2, thus v1 = (m2/m1)v2
 		
-		velocity = new Velocity((other.getMass() / getMass()) * velocity.getX(), (other.getMass() / getMass()) * velocity.getY());
-		other.velocity = new Velocity((getMass() / other.getMass()) * initVel.getX(), (getMass() / other.getMass()) * initVel.getY());
+		velocity = new Vector((other.getMass() / getMass()) * velocity.getX(), (other.getMass() / getMass()) * velocity.getY());
+		other.velocity = new Vector((getMass() / other.getMass()) * initVel.getX(), (getMass() / other.getMass()) * initVel.getY());
 		
 	}
 	

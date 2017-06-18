@@ -22,7 +22,7 @@ public class Vector
     }
     
     public double getMagnitude() {
-    	return Math.sqrt((Math.pow(myX, 2) + Math.pow(myY, 2));
+    	return Math.sqrt((Math.pow(myX, 2) + Math.pow(myY, 2)));
     }
     
     public void setX(double newX) {
