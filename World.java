@@ -50,7 +50,15 @@ public class World {
                     }
                 }
             }
+            //check for collision with wall
+            if (mol.getPosition().getX() <=0 || mol.getPosition().getY() <= 0 || mol.getPosition().getX() >= GUI.WINDOW_WIDTH || mol.getPosition().getY() >= GUI.WINDOW_HEIGHT) {
+                double collideXVel=mol.getVelocity().getX()*(-0.75);
+                double collideYVel=mol.getVelocity().getY()*(-0.75);
+            }
             //change velocities based on vicosity
+            double newXPos=mol.getPosition().getX()+mol.getVelocity().getX()*timeElapsed;
+            double newYPos=mol.getPosition().getY()+mol.getVelocity().getY()*timeElapsed;
+            mol.setPosition(new Vector(newXPos, newYPos));
         }
         molecules=newMols; //set list of molecules to updated molecules
     }
