@@ -42,6 +42,10 @@ public class Molecule {
 		return range;
 	}
 	
+	public int getId() {
+	    return id;
+	}
+	
 	public void setPosition(Vector newPos) {
 		position = newPos;
 	}
