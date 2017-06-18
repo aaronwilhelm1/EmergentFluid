@@ -13,10 +13,13 @@ public class World {
     
     public World() {
         molecules=new ArrayList<Molecule>();
-        Vector startPos=new Vector((double)GUI.WINDOW_WIDTH/2.0, (double)GUI.WINDOW_HEIGHT/2.0);
+        int x = 20;
+        int y = (int) (GUI.WINDOW_HEIGHT/2.0);
         Vector startVel=new Vector(0.0, 0.0);
-        for (int x=0;x<MOLCOUNT;x++) {
-            molecules.add(new Molecule(startPos, startVel, 10, 10, 10, 10));
+        int numOfMols = 0;
+        while((x + 10) < GUI.WINDOW_WIDTH && numOfMols < MOLCOUNT) {
+        	molecules.add(new Molecule(new Vector(x, y), startVel, 10, 10, 10, 10));
+        	x += 25; //twice the radius and a little extra
         }
         time = System.currentTimeMillis();
     }
