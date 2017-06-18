@@ -9,11 +9,13 @@ public class World {
     public final int NEIGHBOR=1;
     public final int OUT_OF_RANGE=2;
     private static int ID=0;
+    private long time;
+    
     public World() {
         molecules=new ArrayList<Molecule>();
         Vector startPos=new Vector((double)GUI.WINDOW_WIDTH/2.0, (double)GUI.WINDOW_HEIGHT/2.0);
         Vector startVel=new Vector(0.0, 0.0);
-        for (int x=0;x<molCount;x++) {
+        for (int x=0;x<MOLCOUNT;x++) {
             molecules.add(new Molecule(startPos, startVel, 10, 10, 10, 10));
         }
         time = System.currentTimeMillis();
@@ -29,9 +31,9 @@ public class World {
         
         for (Molecule mol : newMols) {
             //account for accelerations
-            double newXVel=mol.getVelocity.getX()+GRAVITY*timeElapsed;
-            double newYVel=mol.getVelocity.getY()+GRAVITY*timeElapsed;
-            mol.setVelocity(new Velocity(newXVel, newYVel));
+            double newXVel=mol.getVelocity().getX()+GRAVITY*timeElapsed;
+            double newYVel=mol.getVelocity().getY()+GRAVITY*timeElapsed;
+            mol.setVelocity(new Vector(newXVel, newYVel));
 
             ArrayList<Molecule> neighbors=new ArrayList<Molecule>();
             //find neighbors
