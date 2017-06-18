@@ -13,7 +13,7 @@ public class Molecule {
 		mass = newMass;
 		radius = newRadius;
 		viscosity = newViscosity;
-		range = newRange
+		range = newRange + radius
 	}
 	
 	public Vector getPosition() {
@@ -46,6 +46,15 @@ public class Molecule {
 	
 	public void setVelocity(Vector newVel) {
 		velocity = newVel;
+	}
+	
+	public void collide(Molecule other) {
+		Vector initVel = new Vector(velocity.getX(), velocity.getY());
+		//m1v1 = m2v2, thus v1 = (m2/m1)v2
+		
+		velocity = new Velocity((other.getMass() / getMass()) * velocity.getX(), (other.getMass() / getMass()) * velocity.getY());
+		other.velocity = new Velocity((getMass() / other.getMass()) * initVel.getX(), (getMass() / other.getMass()) * initVel.getY());
+		
 	}
 	
 }
