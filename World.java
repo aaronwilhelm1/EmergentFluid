@@ -4,7 +4,7 @@ import java.lang.Math;
 public class World {
     private ArrayList<Molecule> molecules;
     public final int MOLCOUNT=20;
-    public final double GRAVITY=9.8;
+    public final double GRAVITY=50;
     public final int COLLISION=0;
     public final int NEIGHBOR=1;
     public final int OUT_OF_RANGE=2;
@@ -52,11 +52,13 @@ public class World {
                 }
             }
             //check for collision with wall
-            if (mol.getPosition().getX() <=0 || mol.getPosition().getY() <= 0 || mol.getPosition().getX() >= GUI.WINDOW_WIDTH || mol.getPosition().getY() >= GUI.WINDOW_HEIGHT) {
+            if (mol.getPosition().getX() <= mol.getRadius() || mol.getPosition().getY() <= mol.getRadius() || mol.getPosition().getX() >= GUI.WINDOW_WIDTH-mol.getRadius() || mol.getPosition().getY() >= GUI.WINDOW_HEIGHT-mol.getRadius()) {
                 double collideXVel=mol.getVelocity().getX()*(-0.75);
                 double collideYVel=mol.getVelocity().getY()*(-0.75);
+                mol.setVelocity(new Vector(collideXVel, collideYVel));
             }
-            //change velocities based on vicosity
+            
+            //update position
             double newXPos=mol.getPosition().getX()+mol.getVelocity().getX()*((double)timeElapsed/1000);
             double newYPos=mol.getPosition().getY()+mol.getVelocity().getY()*((double)timeElapsed/1000);
             mol.setPosition(new Vector(newXPos, newYPos));
