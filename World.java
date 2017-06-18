@@ -10,6 +10,7 @@ public class World {
     public final int OUT_OF_RANGE=2;
     private static int ID=0;
     private long time;
+    private int molIDBeingHeld;
     
     public World() {
         molecules=new ArrayList<Molecule>();
@@ -22,6 +23,7 @@ public class World {
         	x += 25; //twice the radius and a little extra
         }
         time = System.currentTimeMillis();
+        molIDBeingHeld = -1;
     }
     
     public void step(long timeElapsed)
@@ -91,6 +93,30 @@ public class World {
     	//By here there were no collisions so go ahead and add the molecule
     	molecules.add(m);
     	return true;
+    }
+    
+    public boolean moleculeIsThere(Vector v) {
+    	for(Molecule mol : molecules) {
+    		double dist = (new Vector((v.getX() - mol.getPosition().getX()), (v.getY() - mol.getPosition().getY()))).getMagnitude();
+    		if(dist < (mol.getRadius())) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
+    public void moleculeIsBeingHeld(boolean var, Vector v) {
+    	if(var == false){
+    		molIDBeingHeld = -1;
+    	} else {
+    		for(Molecule mol : molecules) {
+        		double dist = (new Vector((v.getX() - mol.getPosition().getX()), (v.getY() - mol.getPosition().getY()))).getMagnitude();
+        		if(dist < (mol.getRadius())) {
+        			molIDBeingHeld = mol.getId();
+        			break;
+        		}
+        	}
+    	}
     }
         
     public void paint(Graphics g) {

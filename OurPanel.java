@@ -29,7 +29,7 @@ public class OurPanel extends JPanel{
     // off-screen image
     world.paint(buffer);
 
-    g.drawImage(offImage, 3, 37, null); //3, 37 is the offset necessary to keep the image from being drawn
+    g.drawImage(offImage, 0, 0, null); //3, 37 is the offset necessary to keep the image from being drawn
     									//under the header bar of the window
     
 	}

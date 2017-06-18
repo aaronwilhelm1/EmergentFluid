@@ -166,9 +166,22 @@ public class GUI extends JFrame implements ActionListener{
 	            // only those of the 5 methods that you really need
 	    private class MouseClickHandler extends MouseAdapter
 	    {
-	        public void mouseClicked ( MouseEvent event )
+	        
+	        public void mousePressed( MouseEvent event)
 	        {
-	            world.addMolecule(new Molecule(new Vector(event.getX() - 3, event.getY() - 37), new Vector(0,0), 10, 10, 10, 10));
+	        	if(world.moleculeIsThere(new Vector(event.getX(), event.getY()))){
+	        		//drag the molecule around
+	        		world.moleculeIsBeingHeld(true, new Vector(event.getX(), event.getY()));
+	        	} else {
+	        		//we'll try to add a new Molecule there
+	        		world.addMolecule(new Molecule(new Vector(event.getX(), event.getY()), new Vector(0,0), 10, 10, 10, 10));
+	        	}
+	        	
+	        }
+	        
+	        public void mouseReleased( MouseEvent event)
+	        {	
+	        	world.moleculeIsBeingHeld(false, new Vector());
 	        }
 	    }   // end MouseClickHandler
 	        
