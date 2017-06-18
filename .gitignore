@@ -71,5 +71,6 @@ local.properties
 .scala_dependencies
 .worksheet
 
-.classpath
-.project
+*.classpath
+*.project
+*.bluej
