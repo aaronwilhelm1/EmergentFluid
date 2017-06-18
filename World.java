@@ -80,6 +80,18 @@ public class World {
 		two.setVelocity(new Vector((one.getMass() / two.getMass()) * initVel.getX(), (one.getMass() / two.getMass()) * initVel.getY()));
 		
 	}
+    
+    //returns true if you could add a molecule
+    public boolean addMolecule(Molecule m) {
+    	for(Molecule mol : molecules) {
+    		if(getDist(m, mol) < (m.getRadius() + mol.getRadius())) {
+    			return false;
+    		}
+    	}
+    	//By here there were no collisions so go ahead and add the molecule
+    	molecules.add(m);
+    	return true;
+    }
         
     public void paint(Graphics g) {
     	//first step the simulation

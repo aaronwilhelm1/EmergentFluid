@@ -168,7 +168,7 @@ public class GUI extends JFrame implements ActionListener{
 	    {
 	        public void mouseClicked ( MouseEvent event )
 	        {
-	            
+	            world.addMolecule(new Molecule(new Vector(event.getX() - 3, event.getY() - 37), new Vector(0,0), 10, 10, 10, 10));
 	        }
 	    }   // end MouseClickHandler
 	        
