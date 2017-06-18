@@ -49,7 +49,7 @@ public class GUI extends JFrame implements ActionListener{
 	        WINDOW_WIDTH = (int)width;
 	        WINDOW_HEIGHT = (int) height;
 	        
-	        world = new World(this, panel);
+	        world = new World();
 	        panel = new OurPanel(this, world);
 	        this.getContentPane().add(panel);
 	    

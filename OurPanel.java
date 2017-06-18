@@ -27,7 +27,7 @@ public class OurPanel extends JPanel{
     // Creates a graphics context for drawing to an 
 
     // off-screen image
-    world.paintOffScreen(buffer);
+    world.paint(buffer);
 
     g.drawImage(offImage, 3, 37, null); //3, 37 is the offset necessary to keep the image from being drawn
     									//under the header bar of the window
