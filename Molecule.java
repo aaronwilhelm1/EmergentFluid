@@ -4,14 +4,16 @@ public class Molecule {
 	private Vector velocity;
 	private double mass;
 	private double radius;
-	private double viscosity;
+	private double viscosity; //the amount that neighbors affect it (from 0 to 1)
+	private double range; //the radius in which molecules count as neighbors
 	
-	public Molecule(Vector initPos, Vector initVel, double newMass, double newRadius, double newViscosity) {
+	public Molecule(Vector initPos, Vector initVel, double newMass, double newRadius, double newViscosity, double newRange) {
 		position = initPos;
 		velocity = initVel;
 		mass = newMass;
 		radius = newRadius;
 		viscosity = newViscosity;
+		range = newRange
 	}
 	
 	public Vector getPosition() {
@@ -32,6 +34,10 @@ public class Molecule {
 	
 	public double getViscosity() {
 		return viscosity;
+	}
+	
+	public double getRange() {
+		return range;
 	}
 	
 	public void setPosition(Vector newPos) {
