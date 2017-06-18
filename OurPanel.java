@@ -20,7 +20,7 @@ public class OurPanel extends JPanel{
 
     // Creates an off-screen drawable image to be used for
 
-    // double buffering; XSIZE, YSIZE are each of type ‘int’ 
+    // double buffering; XSIZE, YSIZE are each of type int 
 
     Graphics buffer = offImage.getGraphics();
 
