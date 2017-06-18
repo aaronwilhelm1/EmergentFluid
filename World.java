@@ -1,27 +1,30 @@
 import java.util.*;
+import java.awt.Graphics;
 import java.lang.Math;
 public class World {
     private ArrayList<Molecule> molecules;
     public final int molCount=20;
     public final double gravity=9.8;
+    private long time;
 
     public World() {
         molecules=new ArrayList<Molecule>();
         Vector startPos=new Vector((double)GUI.WINDOW_WIDTH/2.0, (double)GUI.WINDOW_HEIGHT/2.0);
         Vector startVel=new Vector(0.0, 0.0);
         for (int x=0;x<molCount;x++) {
-            molecules.add(new Molecule(startpPos, startVel, 1, 1, 1, 1));
+            molecules.add(new Molecule(startPos, startVel, 10, 10, 10, 10));
         }
+        time = System.currentTimeMillis();
     }
     
-    public void step(double timeElapsed)
+    public void step(long timeElapsed)
     {
         ArrayList<Molecule> newMols=molecules;
         for (Molecule mol : newMols) {
             //account for accelerations
-            double newXVel=mol.getVelocity.getX()+gravity*timeElapsed;
-            double newYVel=mol.getVelocity.getY()+gravity*timeElapsed;
-            mol.setVelocity(new Velocity(newXVel, newYVel));
+            double newXVel=mol.getVelocity().getX()+gravity*timeElapsed;
+            double newYVel=mol.getVelocity().getY()+gravity*timeElapsed;
+            mol.setVelocity(new Vector(newXVel, newYVel));
 
             ArrayList<Molecule> neighbors=new ArrayList<Molecule>();
             //find neighbors
@@ -40,9 +43,9 @@ public class World {
     }
     
     public double getDist(Molecule one, Molecule two) {
-        double xDist=one.getPosition.getX()-two.getPosition.getX();
-        double yDist=one.getPosition.getY()-two.getPosition.getY();
-        return hypot(xDist, yDist);
+        double xDist=one.getPosition().getX()-two.getPosition().getX();
+        double yDist=one.getPosition().getY()-two.getPosition().getY();
+        return (new Vector(xDist, yDist)).getMagnitude();
     }
     
     public int interact(Molecule one, Molecule two) {
@@ -57,15 +60,25 @@ public class World {
     }
     
     public void collide(Molecule one, Molecule two) {
-		Vector initVel = new Vector(one.getVelocity.getX(), one.getVelocity.getY());
+		Vector initVel = new Vector(one.getVelocity().getX(), one.getVelocity().getY());
 		//m1v1 = m2v2, thus v1 = (m2/m1)v2
 		
-		one.setVelocity(new Vector((two.getMass() / one.getMass()) * one.getVelocity.getX(), (two.getMass() / one.getMass()) * one.getVelocity.getY()));
+		one.setVelocity(new Vector((two.getMass() / one.getMass()) * one.getVelocity().getX(), (two.getMass() / one.getMass()) * one.getVelocity().getY()));
 		two.setVelocity(new Vector((one.getMass() / two.getMass()) * initVel.getX(), (one.getMass() / two.getMass()) * initVel.getY()));
 		
 	}
         
-    public void paint() {
+    public void paint(Graphics g) {
+    	//first step the simulation
+    	long difference = time - System.currentTimeMillis();
+    	time = System.currentTimeMillis();
+    	step(difference);
+    	
         //go through list and draw each molecule
+    	for (Molecule mol : molecules) {
+    		int diameter = (int)(2 * mol.getRadius());
+    		g.drawOval((int)(mol.getPosition().getX() - mol.getRadius()), (int)(mol.getPosition().getY() - mol.getRadius()), diameter, diameter);
+    		
+    	}
     }
 }
