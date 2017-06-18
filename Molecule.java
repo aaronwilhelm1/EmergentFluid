@@ -48,13 +48,4 @@ public class Molecule {
 		velocity = newVel;
 	}
 	
-	public void collide(Molecule other) {
-		Vector initVel = new Vector(velocity.getX(), velocity.getY());
-		//m1v1 = m2v2, thus v1 = (m2/m1)v2
-		
-		velocity = new Vector((other.getMass() / getMass()) * velocity.getX(), (other.getMass() / getMass()) * velocity.getY());
-		other.velocity = new Vector((getMass() / other.getMass()) * initVel.getX(), (getMass() / other.getMass()) * initVel.getY());
-		
-	}
-	
 }

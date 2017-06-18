@@ -1,4 +1,5 @@
 import java.util.*;
+import java.lang.Math;
 public class World {
     private ArrayList<Molecule> molecules;
     public final int molCount=20;
@@ -25,7 +26,12 @@ public class World {
             ArrayList<Molecule> neighbors=new ArrayList<Molecule>();
             //find neighbors
             for (Molecule other : molecules) {
-                //if other in range and not self, add to neighbors
+                if (interact(mol, other)==0) {
+                   collide(mol, other); 
+                }
+                if (interact(mol, other)==1) {
+                    neighbors.add(other); //MAKE SURE NOT TO ADD IF OTHER MOLECULE IS SELF (does it wokr to do if mol!=other ?)
+                }
             }
             //check for collisions
             //change velocities based on vicosity
@@ -33,11 +39,32 @@ public class World {
         molecules=newMols; //set list of molecules to updated molecules
     }
     
-    public boolean inRange(Molecule one, Molecule two) {
+    public double getDist(Molecule one, Molecule two) {
         double xDist=one.getPosition.getX()-two.getPosition.getX();
         double yDist=one.getPosition.getY()-two.getPosition.getY();
+        return hypot(xDist, yDist);
     }
     
+    public int interact(Molecule one, Molecule two) {
+        double dist=getDist(one,two);
+        if (dist<=(one.getRadius()+two.getRadius())) {
+            return 0; //collision
+        }
+        if (dist<=(one.getRange()+two.getRadius())) {
+            return 1; //neighbor
+        }
+        return 2; //out of range
+    }
+    
+    public void collide(Molecule one, Molecule two) {
+		Vector initVel = new Vector(one.getVelocity.getX(), one.getVelocity.getY());
+		//m1v1 = m2v2, thus v1 = (m2/m1)v2
+		
+		one.setVelocity(new Vector((two.getMass() / one.getMass()) * one.getVelocity.getX(), (two.getMass() / one.getMass()) * one.getVelocity.getY()));
+		two.setVelocity(new Vector((one.getMass() / two.getMass()) * initVel.getX(), (one.getMass() / two.getMass()) * initVel.getY()));
+		
+	}
+        
     public void paint() {
         //go through list and draw each molecule
     }
