@@ -4,7 +4,7 @@ import java.lang.Math;
 public class World {
     private ArrayList<Molecule> molecules;
     public final int MOLCOUNT=20;
-    public final double GRAVITY=50;
+    public final double GRAVITY=10;
     public final int COLLISION=0;
     public final int NEIGHBOR=1;
     public final int OUT_OF_RANGE=2;
@@ -52,6 +52,29 @@ public class World {
                     }
                 }
             }
+            
+            //update velocity based on neighbors
+            for (Molecule neighbor : neighbors) {
+                double otherVel = neighbor.getVelocity().getMagnitude()*mol.getViscosity();
+                
+                double xDiff = neighbor.getPosition().getX()-mol.getPosition().getX();
+                double yDiff = neighbor.getPosition().getY()-mol.getPosition().getY();
+                
+                double factor = Math.abs(yDiff/xDiff);
+                
+                double xVelChange = otherVel/(1+factor);
+                if (xDiff<0) {
+                    xVelChange *= -1;
+                }
+                
+                double yVelChange = otherVel*factor;
+                if (yDiff<0) {
+                    yVelChange *= -1;
+                }
+                
+                mol.setVelocity(new Vector(mol.getVelocity().getX()+xVelChange, mol.getVelocity().getY()+yVelChange));
+            }
+            
             //check for collision with wall
             double collideXVel= mol.getVelocity().getX();
             double collideYVel=mol.getVelocity().getY();
