@@ -41,4 +41,8 @@ public class Vector
     public double dot(Vector other) {
         return myX*other.getX()+myY*other.getY();
     }
+    
+    public double angleBetween(Vector other) {
+    	return Math.acos(this.dot(other) / (getMagnitude() * other.getMagnitude()));
+    }
 }
