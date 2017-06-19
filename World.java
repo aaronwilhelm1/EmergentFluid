@@ -53,11 +53,15 @@ public class World {
                 }
             }
             //check for collision with wall
-            if (mol.getPosition().getX() <= mol.getRadius() || mol.getPosition().getY() <= mol.getRadius() || mol.getPosition().getX() >= GUI.WINDOW_WIDTH-mol.getRadius() || mol.getPosition().getY() >= GUI.WINDOW_HEIGHT-mol.getRadius()) {
-                double collideXVel=mol.getVelocity().getX()*(-0.75);
-                double collideYVel=mol.getVelocity().getY()*(-0.75);
-                mol.setVelocity(new Vector(collideXVel, collideYVel));
+            double collideXVel= mol.getVelocity().getX();
+            double collideYVel=mol.getVelocity().getY();
+            if (mol.getPosition().getX() <= mol.getRadius() || mol.getPosition().getX() >= GUI.WINDOW_WIDTH-mol.getRadius()) {
+            	collideXVel=mol.getVelocity().getX()*(-0.75);
             }
+            if (mol.getPosition().getY() <= mol.getRadius() || mol.getPosition().getY() >= GUI.WINDOW_HEIGHT-mol.getRadius()) {
+            	collideYVel=mol.getVelocity().getY()*(-0.75);
+            }
+            mol.setVelocity(new Vector(collideXVel, collideYVel));
             //change velocities based on viscosity
             
             //update position
