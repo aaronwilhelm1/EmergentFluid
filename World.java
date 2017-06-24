@@ -1,9 +1,10 @@
 import java.util.*;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.lang.Math;
 public class World {
     private ArrayList<Molecule> molecules;
-    public final int MOLCOUNT=10;
+    public final int MOLCOUNT=100;
     public final double GRAVITY=10;
     public final int COLLISION=0;
     public final int NEIGHBOR=1;
@@ -12,6 +13,7 @@ public class World {
     private long time;
     private int molIDBeingHeld;
     private OurPanel panel;
+    private boolean drawDebug = true;
     
     public World() {
         molecules=new ArrayList<Molecule>();
@@ -20,7 +22,7 @@ public class World {
         Vector startVel=new Vector(0.0, 0.0);
         int numOfMols = 0;
         while((x + 10) < GUI.WINDOW_WIDTH && numOfMols < MOLCOUNT) {
-            molecules.add(new Molecule(new Vector(x, y), startVel, 10, 10, 0.01, 10));
+            molecules.add(new Molecule(new Vector(x, y), startVel, 10, 10, 0.01, 100));
             x += 25; //twice the radius and a little extra
             numOfMols++;
         }
@@ -33,7 +35,7 @@ public class World {
         ArrayList<Molecule> newMols=new ArrayList<Molecule>(); //list of molecules to be edited
         
         for (Molecule old : molecules) {
-            newMols.add(new Molecule(old.getPosition(), old.getVelocity(), old.getMass(), old.getRadius(), old.getViscosity(), old.getRange(), old.getId()));
+            newMols.add(new Molecule(old.getPosition(), old.getVelocity(), old.getMass(), old.getRadius(), old.getViscosity(), old.getRange() - old.getRange(), old.getId()));
         }
         
         for (Molecule mol : newMols) {
@@ -72,8 +74,8 @@ public class World {
                 double factor = mol.getViscosity() * (dotvd/distsquared);
                 
                 //multiply the distance vector by the factor
-                double xVelChange = factor * xDiff ;
-                double yVelChange = factor * yDiff;
+                double xVelChange = 0.75 * factor * xDiff ;
+                double yVelChange = 0.75 * factor * yDiff;
                 
                 mol.setVelocity(new Vector(mol.getVelocity().getX()+xVelChange, mol.getVelocity().getY()+yVelChange));
             }
@@ -196,8 +198,13 @@ public class World {
         //go through list and draw each molecule
         for (Molecule mol : molecules) {
             int diameter = (int)(2 * mol.getRadius());
+            g.setColor(Color.BLACK);
             g.drawOval((int)(mol.getPosition().getX() - mol.getRadius()), (int)(mol.getPosition().getY() - mol.getRadius()), diameter, diameter);
-            
+            if(drawDebug) {
+            	g.setColor(Color.BLUE);
+            	int rdiameter = (int)(2* mol.getRange());
+            	g.drawOval((int)(mol.getPosition().getX() - mol.getRange()), (int)(mol.getPosition().getY()- mol.getRange()), rdiameter, rdiameter);
+            }
         }
     }
 }
