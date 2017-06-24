@@ -9,7 +9,7 @@ public class Molecule {
 	private int id;
 	
 	public static final double MIN_VISCOSITY = 0;
-	public static final double MAX_VISCOSITY = 10;
+	public static final double MAX_VISCOSITY = 0.2;
 	
 	private static int classID = 0;
 	
