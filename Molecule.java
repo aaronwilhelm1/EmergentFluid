@@ -8,6 +8,9 @@ public class Molecule {
 	private double range; //the distance between boundaries in which molecules count as neighbors
 	private int id;
 	
+	public static final double MIN_VISCOSITY = 0;
+	public static final double MAX_VISCOSITY = 10;
+	
 	private static int classID = 0;
 	
 	public Molecule(Vector initPos, Vector initVel, double newMass, double newRadius, double newViscosity, double newRange, int newId) {
@@ -65,6 +68,10 @@ public class Molecule {
 	
 	public void setVelocity(Vector newVel) {
 		velocity = newVel;
+	}
+	
+	public void setViscosity(double newVis) {
+		viscosity = newVis;
 	}
 	
 }
