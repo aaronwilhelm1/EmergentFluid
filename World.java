@@ -174,6 +174,12 @@ public class World {
     	}
     }
     
+    public void setViscosities(double newVis) {
+    	for( Molecule mol : molecules) {
+    		mol.setViscosity(newVis);
+    	}
+    }
+    
     public void setPanel(OurPanel p) {
     	panel = p;
     }
