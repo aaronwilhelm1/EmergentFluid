@@ -35,7 +35,7 @@ public class World {
         ArrayList<Molecule> newMols=new ArrayList<Molecule>(); //list of molecules to be edited
         
         for (Molecule old : molecules) {
-            newMols.add(new Molecule(old.getPosition(), old.getVelocity(), old.getMass(), old.getRadius(), old.getViscosity(), old.getRange() - old.getRange(), old.getId()));
+            newMols.add(new Molecule(old.getPosition(), old.getVelocity(), old.getMass(), old.getRadius(), old.getViscosity(), old.getRange() - old.getRadius(), old.getId()));
         }
         
         for (Molecule mol : newMols) {
@@ -203,6 +203,7 @@ public class World {
             if(drawDebug) {
             	g.setColor(Color.BLUE);
             	int rdiameter = (int)(2* mol.getRange());
+            	System.out.println(mol.getRange());
             	g.drawOval((int)(mol.getPosition().getX() - mol.getRange()), (int)(mol.getPosition().getY()- mol.getRange()), rdiameter, rdiameter);
             }
         }
