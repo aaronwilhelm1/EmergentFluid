@@ -185,7 +185,7 @@ public class GUI extends JFrame implements ActionListener, ChangeListener{
 	        		world.moleculeIsBeingHeld(true, new Vector(event.getX(), event.getY()));
 	        	} else {
 	        		//we'll try to add a new Molecule there
-	        		world.addMolecule(new Molecule(new Vector(event.getX(), event.getY()), new Vector(0,0), 10, 10, 10, 10));
+	        		world.addMolecule(new Molecule(new Vector(event.getX(), event.getY()), new Vector(0,0), 10, 10, 0.01, 10));
 	        	}
 	        	
 	        }

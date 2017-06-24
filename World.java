@@ -3,7 +3,7 @@ import java.awt.Graphics;
 import java.lang.Math;
 public class World {
     private ArrayList<Molecule> molecules;
-    public final int MOLCOUNT=2;
+    public final int MOLCOUNT=10;
     public final double GRAVITY=10;
     public final int COLLISION=0;
     public final int NEIGHBOR=1;
@@ -20,7 +20,7 @@ public class World {
         Vector startVel=new Vector(0.0, 0.0);
         int numOfMols = 0;
         while((x + 10) < GUI.WINDOW_WIDTH && numOfMols < MOLCOUNT) {
-            molecules.add(new Molecule(new Vector(x, y), startVel, 10, 10, 0, 10));
+            molecules.add(new Molecule(new Vector(x, y), startVel, 10, 10, 0.01, 10));
             x += 25; //twice the radius and a little extra
             numOfMols++;
         }
