@@ -20,7 +20,7 @@ public class World {
         Vector startVel=new Vector(0.0, 0.0);
         int numOfMols = 0;
         while((x + 10) < GUI.WINDOW_WIDTH && numOfMols < MOLCOUNT) {
-            molecules.add(new Molecule(new Vector(x, y), startVel, 10, 10, .1, 10));
+            molecules.add(new Molecule(new Vector(x, y), startVel, 10, 10, 0, 10));
             x += 25; //twice the radius and a little extra
             numOfMols++;
         }
@@ -47,8 +47,7 @@ public class World {
                 if (other.getId() != mol.getId()) {//not same molecule
                     if (interact(mol, other)==COLLISION) { //check for collisions
                         collide(mol, other); 
-                    }
-                    if (interact(mol, other)==NEIGHBOR) { //check for nearby molecules
+                    } else if (interact(mol, other)==NEIGHBOR) { //check for nearby molecules
                         neighbors.add(other); 
                     }
                 }
@@ -137,7 +136,7 @@ public class World {
         Vector initVel = new Vector(one.getVelocity().getX(), one.getVelocity().getY());
         //m1v1 = m2v2, thus v1 = (m2/m1)v2
         
-        one.setVelocity(new Vector((two.getMass() / one.getMass()) * one.getVelocity().getX(), (two.getMass() / one.getMass()) * one.getVelocity().getY()));
+        one.setVelocity(new Vector((two.getMass() / one.getMass()) * two.getVelocity().getX(), (two.getMass() / one.getMass()) * two.getVelocity().getY()));
         two.setVelocity(new Vector((one.getMass() / two.getMass()) * initVel.getX(), (one.getMass() / two.getMass()) * initVel.getY()));
         
     }
