@@ -1,5 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+
 import sun.java2d.*;
 
 import java.awt.Graphics;
@@ -15,9 +17,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
+import javax.swing.JSlider;
 import javax.swing.Timer;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
-public class GUI extends JFrame implements ActionListener{
+
+public class GUI extends JFrame implements ActionListener, ChangeListener{
 	// instance variables
 		
 		public static final int TIME_PER_TICK = 55;
@@ -39,7 +45,7 @@ public class GUI extends JFrame implements ActionListener{
 		/** Creates a new instance of gui_test - sets up GUI */
 	    public GUI() {
 	        // STEP 1: must call super() first
-	        super("Emergent Fluid (a.k.a Wasser Program)");
+	        super("Emergent Fluid (a.k.a. Wasser Program)");
 	        
 	        
 	        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -49,15 +55,20 @@ public class GUI extends JFrame implements ActionListener{
 	        WINDOW_WIDTH = (int)width;
 	        WINDOW_HEIGHT = (int) height;
 	        
-	        world = new World();
-	        panel = new OurPanel(this, world);
-	        this.getContentPane().add(panel);
+	        this.setLayout(new FlowLayout());
 	    
 	    // STEPS 2-5: not needed here because this example does not
 	    // include any GUI "components"...
 	        // STEP 2: get content pane and set its layout
 	        // STEP 3: construct component(s), such as:     
 	        // STEP 4: add all components to the Container;
+	        world = new World();
+	        panel = new OurPanel(this, world);
+	        JSlider viscositySlider = new JSlider((int)JSlider.HORIZONTAL, 0, 10, 5);
+	        viscositySlider.addChangeListener(this);
+
+	        this.getContentPane().add(panel);
+	        this.getContentPane().add(viscositySlider);
 	        // STEP 5: register any needed event handlers
 	        addKeyListener( new KeyHandler());
 	        addMouseListener( new MouseClickHandler() );
@@ -184,8 +195,17 @@ public class GUI extends JFrame implements ActionListener{
 	        	world.moleculeIsBeingHeld(false, new Vector());
 	        }
 	    }   // end MouseClickHandler
+	    
+	    //listen to the slider
+	    @Override
+	    public void stateChanged(ChangeEvent e) {
+	        JSlider source = (JSlider)e.getSource();
+	        if (!source.getValueIsAdjusting()) {
+	            double viscosity = ((Molecule.MAX_VISCOSITY - Molecule.MIN_VISCOSITY) / 10) * (source.getValue());
+	            world.setViscosities(viscosity);
+	        }
+	    }
 	        
-	
 	     	
 	    public static void main(String[] args) {
 	        GUI application = new GUI();
